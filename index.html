@@ -1,0 +1,1725 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <!--
+    ============================================================
+    【产品经理视角 · MVP专业评估报告】
+    ============================================================
+
+    一、核心价值与定位分析
+    ------------------------
+    【产品定位】面向产品经理/求职者的「产品感培养工具」
+    【核心价值】
+    1. 降低记录门槛：结构化模板引导，无需从零开始
+    2. 建立思考框架：亮点/问题/建议/洞察四维度，培养PM思维
+    3. 正向激励机制：成长数据、成就系统、趣味文案，形成正向反馈
+    4. 轻量化工具：纯前端、无后端、数据本地存储，开箱即用
+
+    【目标用户】
+    - 在校学生/应届生：准备产品岗求职，积累产品分析案例
+    - 初级产品经理：日常产品体验记录，培养产品敏感度
+    - 产品爱好者：记录使用产品时的思考与感悟
+
+    【MVP验证点】✓ 已验证
+    - 结构化笔记模板的可用性
+    - 本地存储的数据持久化方案
+    - 激励机制对用户留存的促进作用
+
+    ============================================================
+
+    二、用户体验亮点
+    ------------------------
+    1. 【视觉设计】苹果风格+潮流渐变，年轻化审美，区别于传统工具
+    2. 【成长体系】数据卡片+成就解锁+激励文案，游戏化设计提升粘性
+    3. 【专注模式】输入时自动弱化其他元素，减少干扰
+    4. 【细节打磨】毛玻璃效果、平滑动画、卡片悬浮、按压反馈
+    5. 【空状态设计】趣味IP形象+进度条+引导按钮，降低首次使用心理门槛
+    6. 【示例数据】预置2条高质量示例笔记，降低用户学习成本
+
+    ============================================================
+
+    三、存在的问题与不足
+    ------------------------
+    【P0 严重问题 - 功能缺失】
+    1. 灵感收集仅为数字展示，无实际交互能力，核心功能残缺
+    2. 碎片化思考无独立入口，无法快速记录瞬时灵感
+
+    【P1 重要问题 - 体验缺陷】
+    1. 部分可点击区域无hover反馈，交互感知弱
+    2. 首次使用无引导，用户不清楚各功能用途
+    3. 移动端触控区域偏小，误触率高
+    4. 无加载状态/骨架屏，数据渲染时可能出现空白
+
+    【P2 一般问题 - 优化空间】
+    1. 卡片阴影层次不够分明，视觉深度不足
+    2. 图标风格、尺寸不统一，部分图标偏小
+    3. 色彩对比度在部分区域可进一步优化
+    4. 缺少tooltip提示，部分功能含义不直观
+
+    【P3 次要问题 - 体验增强】
+    1. 缺少键盘快捷键支持
+    2. 数据无导出备份功能
+    3. 缺少标签/收藏功能
+
+    ============================================================
+
+    四、优先级改进建议
+    ------------------------
+    【P0 必须完成 - 本次迭代】
+    1. ✓ 灵感收集功能完整实现：模态框+记录+列表+数据存储
+    2. ✓ 灵感数据与首页数据卡片实时同步
+    3. ✓ 写笔记时可快速引用已记录的灵感
+
+    【P1 高优先级 - 本次迭代】
+    1. ✓ 所有点击区域统一添加hover反馈
+    2. ✓ 优化空状态和加载状态
+    3. ✓ 移动端触控区域优化（最小44x44px）
+    4. ✓ 首次使用功能引导
+
+    【P2 中优先级 - 本次迭代】
+    1. ✓ 调整卡片间距和阴影层次
+    2. ✓ 优化色彩对比度
+    3. ✓ 统一图标风格和尺寸
+    4. ✓ 关键操作添加tooltip
+
+    【P3 低优先级 - 后续迭代】
+    1. 键盘快捷键支持
+    2. 数据导出功能
+    3. 标签系统
+    4. 搜索增强
+
+    ============================================================
+    -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品体验笔记 · 培养产品sense</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        // 苹果风格配色系统 - 优化对比度
+                        apple: {
+                            blue: '#007AFF',
+                            blueDark: '#0066CC',
+                            gray: {
+                                50: '#FAFAFA',
+                                100: '#F5F5F7',
+                                200: '#E8E8ED',
+                                300: '#D1D1D6',
+                                400: '#C7C7CC',
+                                500: '#8E8E93',
+                                600: '#636366',
+                                700: '#48484A',
+                                800: '#3A3A3C',
+                                900: '#1C1C1E',
+                            }
+                        },
+                        accent: {
+                            primary: '#007AFF',
+                            secondary: '#5AC8FA',
+                            success: '#32D74B',
+                            warning: '#FF9F0A',
+                            danger: '#FF453A',
+                            purple: '#BF5AF2',
+                            pink: '#FF375F',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'Helvetica Neue', 'sans-serif'],
+                    },
+                    boxShadow: {
+                        // 优化阴影层次系统
+                        'card': '0 1px 3px rgba(0, 0, 0, 0.04), 0 2px 8px rgba(0, 0, 0, 0.04)',
+                        'card-hover': '0 4px 16px rgba(0, 0, 0, 0.08), 0 8px 24px rgba(0, 0, 0, 0.06)',
+                        'modal': '0 8px 32px rgba(0, 0, 0, 0.12), 0 16px 48px rgba(0, 0, 0, 0.08)',
+                        'tooltip': '0 2px 12px rgba(0, 0, 0, 0.15)',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'slide-up': 'slideUp 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'scale-in': 'scaleIn 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-soft': 'pulseSoft 2s ease-in-out infinite',
+                        'bounce-subtle': 'bounceSubtle 2s infinite',
+                        'tooltip': 'tooltipIn 0.2s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { opacity: '0', transform: 'translateY(16px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        scaleIn: {
+                            '0%': { opacity: '0', transform: 'scale(0.96)' },
+                            '100%': { opacity: '1', transform: 'scale(1)' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-8px)' },
+                        },
+                        pulseSoft: {
+                            '0%, 100%': { opacity: '1' },
+                            '50%': { opacity: '0.75' },
+                        },
+                        bounceSubtle: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-4px)' },
+                        },
+                        tooltipIn: {
+                            '0%': { opacity: '0', transform: 'translateY(-4px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        confettiFall: {
+                            '0%': { transform: 'translateY(0) rotate(0deg) scale(1)', opacity: '1' },
+                            '100%': { transform: 'translateY(300px) rotate(720deg) scale(0)', opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            /* 毛玻璃效果 - 优化透明度 */
+            .glass {
+                background: rgba(255, 255, 255, 0.8);
+                backdrop-filter: blur(24px);
+                -webkit-backdrop-filter: blur(24px);
+            }
+            .glass-dark {
+                background: rgba(30, 30, 32, 0.72);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+            
+            /* 苹果风格滚动条 */
+            .scrollbar-apple {
+                scrollbar-width: thin;
+                scrollbar-color: rgba(0, 0, 0, 0.2) transparent;
+            }
+            .scrollbar-apple::-webkit-scrollbar {
+                width: 6px;
+                height: 6px;
+            }
+            .scrollbar-apple::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .scrollbar-apple::-webkit-scrollbar-thumb {
+                background: rgba(0, 0, 0, 0.2);
+                border-radius: 3px;
+            }
+            .scrollbar-apple::-webkit-scrollbar-thumb:hover {
+                background: rgba(0, 0, 0, 0.3);
+            }
+            
+            /* 文本渐变 */
+            .text-gradient {
+                background: linear-gradient(135deg, #007AFF 0%, #5AC8FA 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            
+            /* 卡片悬浮效果 - 优化过渡 */
+            .card-lift {
+                transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .card-lift:hover {
+                transform: translateY(-4px) scale(1.01);
+                box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1), 0 4px 12px rgba(0, 0, 0, 0.06);
+            }
+            
+            /* 按钮按压效果 */
+            .btn-press {
+                transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .btn-press:active {
+                transform: scale(0.96);
+            }
+            
+            /* 输入框聚焦效果 */
+            .input-focus {
+                transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            .input-focus:focus {
+                box-shadow: 0 0 0 4px rgba(0, 122, 255, 0.15);
+            }
+            
+            /* 专注模式 */
+            .focus-mode .non-focus {
+                opacity: 0.15;
+                pointer-events: none;
+                transition: opacity 0.5s ease;
+            }
+            .focus-mode .focus-target {
+                transform: scale(1.01);
+                transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            /* 骨架屏动画 */
+            .skeleton {
+                background: linear-gradient(90deg, #f0f0f0 25%, #e5e5e5 50%, #f0f0f0 75%);
+                background-size: 200% 100%;
+                animation: skeleton 1.5s infinite;
+            }
+            @keyframes skeleton {
+                0% { background-position: 200% 0; }
+                100% { background-position: -200% 0; }
+            }
+            
+            /* 成就解锁动画 */
+            .achievement-unlock {
+                animation: achievementPop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            }
+            @keyframes achievementPop {
+                0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+                50% { transform: scale(1.1) rotate(5deg); }
+                100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            }
+            
+            /* Tooltip 样式 */
+            .tooltip {
+                position: relative;
+            }
+            .tooltip::after {
+                content: attr(data-tooltip);
+                position: absolute;
+                bottom: 100%;
+                left: 50%;
+                transform: translateX(-50%);
+                padding: 6px 12px;
+                background: rgba(0, 0, 0, 0.85);
+                color: white;
+                font-size: 12px;
+                border-radius: 8px;
+                white-space: nowrap;
+                opacity: 0;
+                pointer-events: none;
+                transition: all 0.2s ease;
+                z-index: 100;
+                margin-bottom: 8px;
+            }
+            .tooltip:hover::after {
+                opacity: 1;
+                animation: tooltipIn 0.2s ease-out;
+            }
+            
+            /* 可点击区域优化 - 移动端最小44px */
+            .clickable {
+                min-height: 44px;
+                min-width: 44px;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+            }
+            
+            /* 灵感标签颜色 */
+            .tag-功能设计 { background-color: #007AFF15; color: #007AFF; }
+            .tag-交互体验 { background-color: #5AC8FA15; color: #5AC8FA; }
+            .tag-商业模式 { background-color: #32D74B15; color: #32D74B; }
+            .tag-运营策略 { background-color: #FF9F0A15; color: #FF9F0A; }
+            .tag-其他 { background-color: #8E8E9315; color: #8E8E93; }
+        }
+    </style>
+</head>
+<body class="bg-apple-gray-100 min-h-screen font-sans antialiased">
+    <!-- 潮流渐变背景 -->
+    <div class="fixed inset-0 overflow-hidden pointer-events-none">
+        <div class="absolute -top-20 -right-20 w-[500px] h-[500px] bg-gradient-to-br from-pink-300/20 via-purple-300/15 to-blue-300/10 rounded-full blur-3xl animate-float"></div>
+        <div class="absolute top-1/3 -left-32 w-96 h-96 bg-gradient-to-br from-cyan-300/15 via-blue-300/10 to-purple-300/10 rounded-full blur-3xl animate-float" style="animation-delay: -2s;"></div>
+        <div class="absolute -bottom-20 right-1/4 w-80 h-80 bg-gradient-to-br from-orange-300/10 via-pink-300/15 to-purple-300/10 rounded-full blur-3xl animate-float" style="animation-delay: -4s;"></div>
+        <div class="absolute inset-0 opacity-[0.03]" style="background-image: radial-gradient(circle, #666 1px, transparent 1px); background-size: 30px 30px;"></div>
+    </div>
+
+    <!-- 头部导航 -->
+    <header class="sticky top-0 z-50">
+        <div class="glass border-b border-white/30">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16 sm:h-20">
+                    <div class="flex items-center space-x-3">
+                        <div class="relative">
+                            <div class="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-pink-500 via-purple-500 to-blue-500 rounded-2xl flex items-center justify-center shadow-lg shadow-purple-500/25 animate-pulse-soft">
+                                <span class="text-xl sm:text-2xl">🔍</span>
+                            </div>
+                            <div class="absolute -top-1 -right-1 w-5 h-5 bg-yellow-400 rounded-full flex items-center justify-center text-xs animate-bounce">
+                                ✨
+                            </div>
+                        </div>
+                        <div>
+                            <h1 class="text-lg sm:text-xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent tracking-tight">
+                                产品体验笔记
+                            </h1>
+                            <p class="text-xs text-apple-gray-500 hidden sm:block font-medium">
+                                ✨ 记录每一次思考，培养产品sense
+                            </p>
+                        </div>
+                    </div>
+                    <button onclick="openModal()" class="group bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-white px-4 sm:px-6 py-2.5 sm:py-3 rounded-full font-bold transition-all duration-300 btn-press flex items-center space-x-2 shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105">
+                        <span class="text-lg group-hover:rotate-12 transition-transform">✨</span>
+                        <span class="hidden sm:inline">记录体验</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- 主内容区 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 relative">
+        <!-- 成长数据概览 -->
+        <div class="mb-8 animate-fade-in">
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
+                <!-- 总笔记数 -->
+                <div class="bg-white/85 backdrop-blur-sm rounded-2xl p-4 sm:p-5 shadow-card card-lift cursor-default non-focus">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-apple-gray-600 text-xs sm:text-sm font-medium">总笔记</span>
+                        <div class="w-9 h-9 bg-accent-primary/10 rounded-full flex items-center justify-center">
+                            <svg class="w-4.5 h-4.5 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <p id="totalNotes" class="text-2xl sm:text-3xl font-bold text-apple-gray-900">0</p>
+                    <p class="text-xs text-apple-gray-500 mt-1">篇产品分析</p>
+                </div>
+                
+                <!-- 灵感收集 - 新增可点击交互 -->
+                <div onclick="openInspirationModal()" class="bg-white/85 backdrop-blur-sm rounded-2xl p-4 sm:p-5 shadow-card card-lift cursor-pointer group non-focus tooltip" data-tooltip="点击记录碎片化灵感">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-apple-gray-600 text-xs sm:text-sm font-medium group-hover:text-accent-pink transition-colors">灵感收集</span>
+                        <div class="w-9 h-9 bg-accent-pink/10 rounded-full flex items-center justify-center group-hover:bg-accent-pink/20 transition-colors">
+                            <span class="text-lg group-hover:scale-110 transition-transform">💡</span>
+                        </div>
+                    </div>
+                    <p id="inspirationCount" class="text-2xl sm:text-3xl font-bold text-apple-gray-900 group-hover:text-accent-pink transition-colors">0</p>
+                    <p class="text-xs text-apple-gray-500 mt-1 group-hover:text-accent-pink/70 transition-colors">个产品洞察 · 点击记录 →</p>
+                </div>
+                
+                <!-- 本周记录 -->
+                <div class="bg-white/85 backdrop-blur-sm rounded-2xl p-4 sm:p-5 shadow-card card-lift cursor-default non-focus">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-apple-gray-600 text-xs sm:text-sm font-medium">本周</span>
+                        <div class="w-9 h-9 bg-accent-warning/10 rounded-full flex items-center justify-center">
+                            <svg class="w-4.5 h-4.5 text-accent-warning" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <p id="weekNotes" class="text-2xl sm:text-3xl font-bold text-apple-gray-900">0</p>
+                    <p class="text-xs text-apple-gray-500 mt-1">篇新笔记</p>
+                </div>
+                
+                <!-- 产品覆盖 -->
+                <div class="bg-white/85 backdrop-blur-sm rounded-2xl p-4 sm:p-5 shadow-card card-lift cursor-default non-focus">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="text-apple-gray-600 text-xs sm:text-sm font-medium">产品覆盖</span>
+                        <div class="w-9 h-9 bg-accent-purple/10 rounded-full flex items-center justify-center">
+                            <svg class="w-4.5 h-4.5 text-accent-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path>
+                            </svg>
+                        </div>
+                    </div>
+                    <p id="categoryCount" class="text-2xl sm:text-3xl font-bold text-apple-gray-900">0</p>
+                    <p class="text-xs text-apple-gray-500 mt-1">个品类</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 激励文案 -->
+        <div class="mb-6 text-center animate-fade-in" style="animation-delay: 0.1s;">
+            <p id="motivationText" class="text-sm sm:text-base text-apple-gray-600 font-medium">
+                ✨ 每一次记录，都是向优秀产品经理迈进的一步
+            </p>
+        </div>
+
+        <!-- 搜索和筛选区 -->
+        <div class="mb-6 space-y-4 animate-fade-in" style="animation-delay: 0.2s;">
+            <div class="flex flex-col sm:flex-row gap-4">
+                <!-- 搜索框 -->
+                <div class="relative flex-1 non-focus">
+                    <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-apple-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                    </svg>
+                    <input 
+                        type="text" 
+                        id="searchInput" 
+                        placeholder="搜索产品名称或笔记内容..." 
+                        class="w-full pl-12 pr-4 py-3.5 bg-white/85 backdrop-blur-sm border-0 rounded-2xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400 shadow-card"
+                        oninput="filterNotes()"
+                        onfocus="enterFocusMode(this)"
+                        onblur="exitFocusMode()"
+                    >
+                </div>
+                <!-- 分类筛选 -->
+                <div class="flex gap-2 flex-wrap non-focus">
+                    <select id="categoryFilter" onchange="filterNotes()" class="px-4 py-3.5 bg-white/85 backdrop-blur-sm border-0 rounded-2xl focus:outline-none input-focus text-apple-gray-700 font-medium shadow-card cursor-pointer">
+                        <option value="">全部分类</option>
+                        <option value="电商">电商</option>
+                        <option value="社交">社交</option>
+                        <option value="工具">工具</option>
+                        <option value="内容">内容</option>
+                        <option value="其他">其他</option>
+                    </select>
+                    <select id="sortFilter" onchange="filterNotes()" class="px-4 py-3.5 bg-white/85 backdrop-blur-sm border-0 rounded-2xl focus:outline-none input-focus text-apple-gray-700 font-medium shadow-card cursor-pointer">
+                        <option value="newest">最新优先</option>
+                        <option value="oldest">最早优先</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 笔记列表 -->
+        <div id="notesList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+            <!-- 笔记卡片将通过JS动态渲染 -->
+        </div>
+
+        <!-- 空状态 - 优化版 -->
+        <div id="emptyState" class="hidden text-center py-16 sm:py-24 animate-fade-in">
+            <div class="relative inline-block mb-8">
+                <div class="w-32 h-32 sm:w-40 sm:h-40 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 rounded-[2.5rem] flex items-center justify-center mx-auto shadow-card animate-float">
+                    <div class="text-center">
+                        <div class="text-5xl sm:text-6xl mb-2">🕵️</div>
+                        <div class="flex justify-center gap-1">
+                            <span class="text-2xl animate-bounce-subtle" style="animation-delay: 0s;">💡</span>
+                            <span class="text-2xl animate-bounce-subtle" style="animation-delay: 0.1s;">✨</span>
+                            <span class="text-2xl animate-bounce-subtle" style="animation-delay: 0.2s;">🎯</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="absolute -top-3 -right-3 w-10 h-10 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center text-white shadow-lg animate-bounce-subtle">
+                    🚀
+                </div>
+                <div class="absolute -bottom-2 -left-4 w-8 h-8 bg-gradient-to-br from-pink-400 to-purple-500 rounded-full flex items-center justify-center text-white shadow-lg animate-bounce-subtle" style="animation-delay: 0.3s;">
+                    💪
+                </div>
+            </div>
+            
+            <h3 class="text-2xl sm:text-3xl font-bold bg-gradient-to-r from-pink-600 via-purple-600 to-blue-600 bg-clip-text text-transparent mb-4">
+                开始培养你的产品sense ✨
+            </h3>
+            <p class="text-apple-gray-500 mb-8 max-w-md mx-auto text-base leading-relaxed">
+                不用追求完美，不用刻意分析<br>
+                只是记录你使用产品时的真实感受和思考<br>
+                <span class="text-purple-500 font-medium">每一次记录，都是产品感的积累</span>
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                <button onclick="openModal()" class="group bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-white px-10 py-4 rounded-full font-bold transition-all duration-300 btn-press inline-flex items-center space-x-3 shadow-xl shadow-purple-500/30 hover:shadow-purple-500/40 hover:scale-105">
+                    <span class="text-xl group-hover:rotate-12 transition-transform">💡</span>
+                    <span>记录第一条体验</span>
+                </button>
+                <button onclick="openInspirationModal()" class="group px-8 py-4 bg-white hover:bg-apple-gray-50 text-apple-gray-700 rounded-full font-bold transition-all duration-300 btn-press inline-flex items-center space-x-3 shadow-card hover:shadow-card-hover border border-apple-gray-200">
+                    <span class="text-xl group-hover:scale-110 transition-transform">✨</span>
+                    <span>先记录一个灵感</span>
+                </button>
+            </div>
+            
+            <!-- 趣味进度条 -->
+            <div class="mt-10 max-w-xs mx-auto">
+                <div class="flex justify-between text-xs text-apple-gray-400 mb-2">
+                    <span>产品小白 Lv.0</span>
+                    <span>产品大神 Lv.99</span>
+                </div>
+                <div class="h-2 bg-apple-gray-200 rounded-full overflow-hidden">
+                    <div class="h-full bg-gradient-to-r from-pink-500 to-purple-500 rounded-full w-0 transition-all duration-1000" id="progressBar"></div>
+                </div>
+                <p class="text-xs text-apple-gray-400 mt-2">完成第一篇笔记即可升级！⬆️</p>
+            </div>
+        </div>
+    </main>
+
+    <!-- 成就解锁提示 -->
+    <div id="achievementToast" class="fixed top-24 left-1/2 -translate-x-1/2 z-50 hidden">
+        <div class="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 rounded-3xl px-8 py-5 shadow-modal flex items-center space-x-5 achievement-unlock border-2 border-white/30">
+            <div class="w-14 h-14 bg-white/20 backdrop-blur rounded-2xl flex items-center justify-center animate-bounce-subtle">
+                <span class="text-3xl" id="achievementEmoji">🎉</span>
+            </div>
+            <div class="text-white">
+                <p class="font-bold text-lg" id="achievementTitle">成就解锁！</p>
+                <p class="text-sm text-white/80" id="achievementDesc">完成了第一篇产品笔记</p>
+            </div>
+            <div class="absolute -top-3 -right-3 w-8 h-8 bg-yellow-400 rounded-full flex items-center justify-center text-lg animate-pulse-soft">
+                ✨
+            </div>
+        </div>
+    </div>
+
+    <!-- 新手引导遮罩 -->
+    <div id="guideOverlay" class="fixed inset-0 z-[60] hidden">
+        <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl w-full max-w-lg shadow-modal animate-scale-in p-8 text-center">
+                <div class="w-20 h-20 bg-gradient-to-br from-pink-100 via-purple-100 to-blue-100 rounded-3xl flex items-center justify-center mx-auto mb-6 animate-float">
+                    <span class="text-4xl">👋</span>
+                </div>
+                <h3 class="text-2xl font-bold text-apple-gray-900 mb-3">欢迎使用产品体验笔记！</h3>
+                <p class="text-apple-gray-500 mb-6 leading-relaxed">
+                    这是一个帮助你培养产品sense的工具<br>
+                    随时记录产品体验和碎片化思考<br>
+                    <span class="text-purple-500 font-medium">坚持记录，量变引起质变 ✨</span>
+                </p>
+                <div class="space-y-3 text-left bg-apple-gray-50 rounded-2xl p-5 mb-6">
+                    <div class="flex items-start gap-3">
+                        <span class="text-xl">📝</span>
+                        <div>
+                            <p class="font-medium text-apple-gray-800">记录产品体验</p>
+                            <p class="text-sm text-apple-gray-500">结构化模板引导，轻松完成分析</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-xl">💡</span>
+                        <div>
+                            <p class="font-medium text-apple-gray-800">收集碎片化灵感</p>
+                            <p class="text-sm text-apple-gray-500">点击「灵感收集」快速记录想法</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <span class="text-xl">🔒</span>
+                        <div>
+                            <p class="font-medium text-apple-gray-800">数据安全存储</p>
+                            <p class="text-sm text-apple-gray-500">所有数据保存在本地浏览器中</p>
+                        </div>
+                    </div>
+                </div>
+                <button onclick="closeGuide()" class="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-white py-4 rounded-full font-bold transition-all btn-press shadow-lg shadow-purple-500/25">
+                    开始使用 🚀
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 灵感收集模态框 -->
+    <div id="inspirationModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-apple-gray-900/30 backdrop-blur-md transition-opacity duration-300" onclick="closeInspirationModal()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[92vh] overflow-hidden shadow-modal animate-scale-in">
+                <!-- 模态框头部 -->
+                <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-apple-gray-200/50">
+                    <div>
+                        <h2 class="text-xl font-semibold text-apple-gray-900 flex items-center gap-2">
+                            <span>💡</span> 灵感收集
+                        </h2>
+                        <p class="text-sm text-apple-gray-500 mt-0.5">快速记录碎片化的产品思考与洞察</p>
+                    </div>
+                    <button onclick="closeInspirationModal()" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-apple-gray-100 transition-colors btn-press tooltip" data-tooltip="关闭">
+                        <svg class="w-5 h-5 text-apple-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <div class="flex flex-col lg:flex-row h-[calc(92vh-100px)]">
+                    <!-- 左侧：灵感记录表单 -->
+                    <div class="lg:w-1/2 p-6 sm:p-8 border-b lg:border-b-0 lg:border-r border-apple-gray-100 overflow-y-auto scrollbar-apple">
+                        <h3 class="text-sm font-semibold text-apple-gray-500 uppercase tracking-widest mb-5 flex items-center">
+                            <span class="w-1.5 h-1.5 bg-accent-pink rounded-full mr-2"></span>
+                            记录新灵感
+                        </h3>
+                        
+                        <form id="inspirationForm" class="space-y-5">
+                            <input type="hidden" id="inspirationId">
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-apple-gray-700 mb-2">灵感内容 *</label>
+                                <textarea 
+                                    id="inspirationContent" 
+                                    rows="4" 
+                                    required
+                                    class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400 resize-none"
+                                    placeholder="记录你的想法、点子、洞察、疑问...想到什么就写什么！"
+                                ></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-apple-gray-700 mb-3">分类标签</label>
+                                <div class="flex flex-wrap gap-2" id="categoryTags">
+                                    <button type="button" onclick="selectTag(this, '功能设计')" class="tag-btn px-4 py-2 rounded-full text-sm font-medium bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200 transition-colors">
+                                        功能设计
+                                    </button>
+                                    <button type="button" onclick="selectTag(this, '交互体验')" class="tag-btn px-4 py-2 rounded-full text-sm font-medium bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200 transition-colors">
+                                        交互体验
+                                    </button>
+                                    <button type="button" onclick="selectTag(this, '商业模式')" class="tag-btn px-4 py-2 rounded-full text-sm font-medium bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200 transition-colors">
+                                        商业模式
+                                    </button>
+                                    <button type="button" onclick="selectTag(this, '运营策略')" class="tag-btn px-4 py-2 rounded-full text-sm font-medium bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200 transition-colors">
+                                        运营策略
+                                    </button>
+                                    <button type="button" onclick="selectTag(this, '其他')" class="tag-btn px-4 py-2 rounded-full text-sm font-medium bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200 transition-colors">
+                                        其他
+                                    </button>
+                                </div>
+                                <input type="hidden" id="selectedCategory" value="其他">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-apple-gray-700 mb-2">关联产品（可选）</label>
+                                <input 
+                                    type="text" 
+                                    id="relatedProduct" 
+                                    class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400"
+                                    placeholder="这个灵感来自哪个产品？如：微信、抖音"
+                                >
+                            </div>
+                            
+                            <div class="pt-2">
+                                <button type="submit" class="w-full bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-white py-3.5 rounded-full font-bold transition-all btn-press shadow-lg shadow-purple-500/25 flex items-center justify-center gap-2">
+                                    <span>✨</span>
+                                    <span id="inspirationBtnText">保存灵感</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- 右侧：灵感列表 -->
+                    <div class="lg:w-1/2 p-6 sm:p-8 overflow-y-auto scrollbar-apple">
+                        <div class="flex items-center justify-between mb-5">
+                            <h3 class="text-sm font-semibold text-apple-gray-500 uppercase tracking-widest flex items-center">
+                                <span class="w-1.5 h-1.5 bg-accent-primary rounded-full mr-2"></span>
+                                我的灵感
+                                <span id="inspirationListCount" class="ml-2 text-xs bg-accent-primary/10 text-accent-primary px-2 py-0.5 rounded-full">0</span>
+                            </h3>
+                            <select id="inspirationFilter" onchange="renderInspirationList()" class="px-3 py-1.5 bg-apple-gray-50 border-0 rounded-lg text-sm text-apple-gray-600 focus:outline-none cursor-pointer">
+                                <option value="">全部分类</option>
+                                <option value="功能设计">功能设计</option>
+                                <option value="交互体验">交互体验</option>
+                                <option value="商业模式">商业模式</option>
+                                <option value="运营策略">运营策略</option>
+                                <option value="其他">其他</option>
+                            </select>
+                        </div>
+                        
+                        <div id="inspirationList" class="space-y-3">
+                            <!-- 灵感列表通过JS渲染 -->
+                        </div>
+                        
+                        <!-- 灵感空状态 -->
+                        <div id="inspirationEmpty" class="hidden text-center py-12">
+                            <div class="w-16 h-16 bg-accent-pink/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                                <span class="text-3xl">💭</span>
+                            </div>
+                            <p class="text-apple-gray-500 text-sm">还没有记录灵感</p>
+                            <p class="text-apple-gray-400 text-xs mt-1">随时记录一闪而过的想法</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 新建/编辑笔记模态框 -->
+    <div id="noteModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-apple-gray-900/30 backdrop-blur-md transition-opacity duration-300" onclick="closeModal()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl w-full max-w-4xl max-h-[92vh] overflow-hidden shadow-modal animate-scale-in focus-target">
+                <!-- 模态框头部 -->
+                <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-apple-gray-200/50">
+                    <div>
+                        <h2 id="modalTitle" class="text-xl font-semibold text-apple-gray-900">新建笔记</h2>
+                        <p class="text-sm text-apple-gray-500 mt-0.5">记录你的产品洞察与思考</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="showInspirationQuickInsert()" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-apple-gray-100 transition-colors btn-press tooltip" data-tooltip="插入灵感">
+                            <span class="text-lg">💡</span>
+                        </button>
+                        <button onclick="closeModal()" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-apple-gray-100 transition-colors btn-press tooltip" data-tooltip="关闭">
+                            <svg class="w-5 h-5 text-apple-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 表单内容 -->
+                <form id="noteForm" class="p-6 sm:p-8 overflow-y-auto max-h-[calc(92vh-180px)] scrollbar-apple">
+                    <input type="hidden" id="noteId">
+                    
+                    <!-- 基本信息 -->
+                    <div class="mb-8">
+                        <h3 class="text-xs font-semibold text-apple-gray-500 uppercase tracking-widest mb-4 flex items-center">
+                            <span class="w-1.5 h-1.5 bg-accent-primary rounded-full mr-2"></span>
+                            产品基本信息
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-sm font-medium text-apple-gray-700 mb-2">产品名称</label>
+                                <input type="text" id="productName" required class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400" placeholder="如：淘宝、微信、抖音">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-apple-gray-700 mb-2">产品分类</label>
+                                <select id="category" required class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800">
+                                    <option value="">请选择分类</option>
+                                    <option value="电商">电商</option>
+                                    <option value="社交">社交</option>
+                                    <option value="工具">工具</option>
+                                    <option value="内容">内容</option>
+                                    <option value="其他">其他</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-apple-gray-700 mb-2">体验日期</label>
+                                <input type="date" id="experienceDate" class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800">
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-apple-gray-700 mb-2">版本号</label>
+                                <input type="text" id="version" class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400" placeholder="如：v10.12.0">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 核心功能/亮点 -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-apple-gray-700 mb-3 flex items-center">
+                            <span class="w-6 h-6 bg-accent-warning/10 rounded-lg flex items-center justify-center mr-2">
+                                <svg class="w-3.5 h-3.5 text-accent-warning" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                </svg>
+                            </span>
+                            核心功能 / 设计亮点
+                        </label>
+                        <textarea id="highlights" rows="3" class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400 resize-none" placeholder="这个产品最吸引你的功能是什么？有哪些创新的设计思路？"></textarea>
+                    </div>
+
+                    <!-- 存在的问题/槽点 -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-apple-gray-700 mb-3 flex items-center">
+                            <span class="w-6 h-6 bg-accent-danger/10 rounded-lg flex items-center justify-center mr-2">
+                                <svg class="w-3.5 h-3.5 text-accent-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path>
+                                </svg>
+                            </span>
+                            存在问题 / 体验槽点
+                        </label>
+                        <textarea id="problems" rows="3" class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400 resize-none" placeholder="使用过程中遇到了哪些问题？有哪些反人类的设计？"></textarea>
+                    </div>
+
+                    <!-- 改进建议 -->
+                    <div class="mb-6">
+                        <label class="block text-sm font-semibold text-apple-gray-700 mb-3 flex items-center">
+                            <span class="w-6 h-6 bg-accent-success/10 rounded-lg flex items-center justify-center mr-2">
+                                <svg class="w-3.5 h-3.5 text-accent-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </span>
+                            改进建议
+                        </label>
+                        <textarea id="suggestions" rows="3" class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400 resize-none" placeholder="如果你是产品经理，你会如何优化这些问题？"></textarea>
+                    </div>
+
+                    <!-- 可复用的产品思路 -->
+                    <div class="mb-8">
+                        <label class="block text-sm font-semibold text-apple-gray-700 mb-3 flex items-center">
+                            <span class="w-6 h-6 bg-accent-primary/10 rounded-lg flex items-center justify-center mr-2">
+                                <svg class="w-3.5 h-3.5 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </span>
+                            可复用的产品思路
+                        </label>
+                        <textarea id="insights" rows="3" class="w-full px-4 py-3 bg-apple-gray-50 border border-apple-gray-200/50 rounded-xl focus:outline-none input-focus text-apple-gray-800 placeholder-apple-gray-400 resize-none" placeholder="这个产品有哪些设计思路可以借鉴到你的工作中？"></textarea>
+                    </div>
+
+                    <!-- 提交按钮 -->
+                    <div class="flex justify-end gap-3 pt-4 border-t border-apple-gray-100">
+                        <button type="button" onclick="closeModal()" class="px-6 py-3 bg-apple-gray-100 hover:bg-apple-gray-200 text-apple-gray-700 rounded-full font-medium transition-colors btn-press">
+                            取消
+                        </button>
+                        <button type="submit" class="px-8 py-3 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 hover:from-pink-600 hover:via-purple-600 hover:to-blue-600 text-white rounded-full font-bold transition-all btn-press shadow-lg shadow-purple-500/25 hover:shadow-purple-500/40 hover:scale-105">
+                            ✨ 保存洞察
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- 快速插入灵感弹窗 -->
+    <div id="quickInsertModal" class="fixed inset-0 z-[55] hidden">
+        <div class="absolute inset-0 bg-black/20" onclick="closeQuickInsert()"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-md">
+            <div class="bg-white rounded-2xl shadow-modal p-5 animate-scale-in mx-4">
+                <h4 class="font-semibold text-apple-gray-900 mb-4 flex items-center gap-2">
+                    <span>💡</span> 选择要插入的灵感
+                </h4>
+                <div id="quickInsertList" class="max-h-64 overflow-y-auto scrollbar-apple space-y-2">
+                    <!-- 通过JS渲染 -->
+                </div>
+                <div id="quickInsertEmpty" class="hidden text-center py-6">
+                    <p class="text-apple-gray-500 text-sm">还没有记录灵感</p>
+                    <button onclick="closeQuickInsert();openInspirationModal()" class="text-accent-primary text-sm mt-2 hover:underline">去记录一个 →</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 查看笔记详情模态框 -->
+    <div id="detailModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-apple-gray-900/30 backdrop-blur-md transition-opacity duration-300" onclick="closeDetailModal()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl w-full max-w-3xl max-h-[92vh] overflow-hidden shadow-modal animate-scale-in">
+                <!-- 模态框头部 -->
+                <div class="flex items-center justify-between px-6 sm:px-8 py-5 border-b border-apple-gray-200/50">
+                    <div>
+                        <h2 id="detailTitle" class="text-xl font-semibold text-apple-gray-900">笔记详情</h2>
+                        <p class="text-sm text-apple-gray-500 mt-0.5">产品体验深度分析</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="editFromDetail()" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-apple-gray-100 transition-colors btn-press tooltip" data-tooltip="编辑">
+                            <svg class="w-5 h-5 text-apple-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                            </svg>
+                        </button>
+                        <button onclick="closeDetailModal()" class="w-11 h-11 flex items-center justify-center rounded-full hover:bg-apple-gray-100 transition-colors btn-press tooltip" data-tooltip="关闭">
+                            <svg class="w-5 h-5 text-apple-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- 详情内容 -->
+                <div id="detailContent" class="p-6 sm:p-8 overflow-y-auto max-h-[calc(92vh-100px)] scrollbar-apple">
+                    <!-- 内容通过JS动态渲染 -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 删除确认模态框 -->
+    <div id="deleteModal" class="fixed inset-0 z-50 hidden">
+        <div class="absolute inset-0 bg-apple-gray-900/30 backdrop-blur-md transition-opacity duration-300" onclick="closeDeleteModal()"></div>
+        <div class="relative min-h-screen flex items-center justify-center p-4">
+            <div class="bg-white rounded-3xl w-full max-w-md shadow-modal animate-scale-in p-8 text-center">
+                <div class="w-20 h-20 bg-accent-danger/10 rounded-3xl flex items-center justify-center mx-auto mb-5">
+                    <svg class="w-10 h-10 text-accent-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold text-apple-gray-900 mb-2">确认删除</h3>
+                <p class="text-apple-gray-500 mb-8">这条记录将被永久删除，无法恢复</p>
+                <div class="flex gap-3 justify-center">
+                    <button onclick="closeDeleteModal()" class="px-6 py-3 bg-apple-gray-100 hover:bg-apple-gray-200 text-apple-gray-700 rounded-full font-medium transition-colors btn-press flex-1">
+                        取消
+                    </button>
+                    <button onclick="confirmDelete()" class="px-6 py-3 bg-accent-danger hover:bg-red-600 text-white rounded-full font-medium transition-colors btn-press flex-1">
+                        确认删除
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ==================== 数据存储层 ====================
+        const NOTES_STORAGE_KEY = 'product_experience_notes';
+        const INSPIRATION_STORAGE_KEY = 'product_inspirations';
+        const GUIDE_KEY = 'product_note_first_guide';
+        
+        let currentDeleteId = null;
+        let currentDetailId = null;
+        let currentDeleteType = null; // 'note' or 'inspiration'
+
+        // ==================== 灵感数据管理 ====================
+        
+        function getInspirations() {
+            const data = localStorage.getItem(INSPIRATION_STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveInspirations(inspirations) {
+            localStorage.setItem(INSPIRATION_STORAGE_KEY, JSON.stringify(inspirations));
+            updateInspirationCount();
+        }
+
+        function createInspiration(data) {
+            const inspirations = getInspirations();
+            const newInspiration = {
+                id: generateId(),
+                ...data,
+                createdAt: new Date().toISOString()
+            };
+            inspirations.unshift(newInspiration);
+            saveInspirations(inspirations);
+            return newInspiration;
+        }
+
+        function updateInspiration(id, data) {
+            const inspirations = getInspirations();
+            const index = inspirations.findIndex(i => i.id === id);
+            if (index !== -1) {
+                inspirations[index] = { ...inspirations[index], ...data };
+                saveInspirations(inspirations);
+                return inspirations[index];
+            }
+            return null;
+        }
+
+        function deleteInspiration(id) {
+            const inspirations = getInspirations();
+            const filtered = inspirations.filter(i => i.id !== id);
+            saveInspirations(filtered);
+        }
+
+        function updateInspirationCount() {
+            const count = getInspirations().length;
+            document.getElementById('inspirationCount').textContent = count;
+            document.getElementById('inspirationListCount').textContent = count;
+        }
+
+        // ==================== 笔记数据管理 ====================
+        
+        function getNotes() {
+            const data = localStorage.getItem(NOTES_STORAGE_KEY);
+            return data ? JSON.parse(data) : [];
+        }
+
+        function saveNotes(notes) {
+            localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(notes));
+        }
+
+        function generateId() {
+            return Date.now().toString(36) + Math.random().toString(36).substr(2);
+        }
+
+        // ==================== 成长数据计算 ====================
+        
+        function calculateWeekNotes(notes) {
+            const now = new Date();
+            const weekStart = new Date(now.setDate(now.getDate() - now.getDay()));
+            weekStart.setHours(0, 0, 0, 0);
+            return notes.filter(n => new Date(n.createdAt) >= weekStart).length;
+        }
+
+        function calculateCategoryCount(notes) {
+            const categories = new Set(notes.map(n => n.category).filter(Boolean));
+            return categories.size;
+        }
+
+        function updateGrowthStats() {
+            const notes = getNotes();
+            document.getElementById('totalNotes').textContent = notes.length;
+            document.getElementById('weekNotes').textContent = calculateWeekNotes(notes);
+            document.getElementById('categoryCount').textContent = calculateCategoryCount(notes);
+            updateInspirationCount();
+            updateMotivationText(notes.length);
+        }
+
+        // ==================== 激励文案 ====================
+        
+        const funMotivations = [
+            { emoji: '🌱', text: '每一次记录，都是产品感的积累' },
+            { emoji: '✨', text: '慢慢来，产品思维需要慢慢培养' },
+            { emoji: '💡', text: '记录思考，比完美更重要' },
+            { emoji: '📝', text: '坚持记录，时间会给你答案' },
+            { emoji: '🎯', text: '用心感受，认真思考，真诚记录' },
+            { emoji: '🌈', text: '今天的思考，是明天的沉淀' },
+            { emoji: '💪', text: '点滴积累，终成江河' },
+            { emoji: '🌟', text: '做一个用心观察的产品人' },
+            { emoji: '🍀', text: '保持好奇心，发现产品之美' },
+            { emoji: '🎨', text: '好的产品感，来自持续的观察' },
+            { emoji: '☕', text: '喝杯咖啡，记录此刻的产品思考' },
+            { emoji: '🌿', text: '产品感，在每一次记录中悄悄生长' }
+        ];
+
+        function updateMotivationText(count) {
+            const randomIndex = Math.floor(Math.random() * funMotivations.length);
+            const motivation = funMotivations[randomIndex];
+            document.getElementById('motivationText').innerHTML = 
+                `<span class="inline-block animate-bounce-subtle mr-1">${motivation.emoji}</span> ${motivation.text}`;
+        }
+
+        // ==================== 成就系统 ====================
+        
+        const funAchievements = [
+            { threshold: 1, title: '✨ 好的开始！', desc: '第一篇记录，产品感养成中', emoji: '🌱' },
+            { threshold: 3, title: '💡 持续积累！', desc: '3篇记录，思考越来越深入', emoji: '📝' },
+            { threshold: 5, title: '🌟 渐入佳境！', desc: '5篇达成，产品感正在形成', emoji: '✨' },
+            { threshold: 10, title: '🎯 养成习惯！', desc: '10篇记录，太棒了！', emoji: '💪' },
+            { threshold: 20, title: '🌈 深度思考者！', desc: '20篇，你的积累会有回报', emoji: '🧠' },
+            { threshold: 50, title: '💎 产品思维养成！', desc: '50篇！量变引起质变', emoji: '🏆' }
+        ];
+
+        function showAchievement(title, desc) {
+            const toast = document.getElementById('achievementToast');
+            document.getElementById('achievementTitle').textContent = title;
+            document.getElementById('achievementDesc').textContent = desc;
+            toast.classList.remove('hidden');
+            createConfetti();
+            setTimeout(() => toast.classList.add('hidden'), 4000);
+        }
+
+        function checkAchievement(noteCount) {
+            const achievement = funAchievements.find(a => a.threshold === noteCount);
+            if (achievement) {
+                setTimeout(() => showAchievement(achievement.title, achievement.desc), 500);
+            }
+        }
+
+        function createConfetti() {
+            const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#96CEB4', '#FFEAA7', '#DDA0DD', '#FFB6C1'];
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: fixed;
+                    width: 10px;
+                    height: 10px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${50 + (Math.random() - 0.5) * 30}%;
+                    top: 15%;
+                    border-radius: ${Math.random() > 0.5 ? '50%' : '2px'};
+                    pointer-events: none;
+                    z-index: 9999;
+                    animation: confettiFall 2s ease-out forwards;
+                    animation-delay: ${Math.random() * 0.5}s;
+                `;
+                document.body.appendChild(confetti);
+                setTimeout(() => confetti.remove(), 2500);
+            }
+        }
+
+        // ==================== 专注模式 ====================
+        
+        function enterFocusMode(element) {
+            document.body.classList.add('focus-mode');
+        }
+
+        function exitFocusMode() {
+            document.body.classList.remove('focus-mode');
+        }
+
+        // ==================== 笔记CRUD ====================
+        
+        function createNote(noteData) {
+            const notes = getNotes();
+            const isFirstNote = notes.length === 0;
+            const newNote = {
+                id: generateId(),
+                ...noteData,
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
+            };
+            notes.unshift(newNote);
+            saveNotes(notes);
+            checkAchievement(notes.length);
+            updateProgressBar(notes.length);
+            return newNote;
+        }
+
+        function updateNote(id, noteData) {
+            const notes = getNotes();
+            const index = notes.findIndex(n => n.id === id);
+            if (index !== -1) {
+                notes[index] = {
+                    ...notes[index],
+                    ...noteData,
+                    updatedAt: new Date().toISOString()
+                };
+                saveNotes(notes);
+                return notes[index];
+            }
+            return null;
+        }
+
+        function deleteNote(id) {
+            const notes = getNotes();
+            const filteredNotes = notes.filter(n => n.id !== id);
+            saveNotes(filteredNotes);
+        }
+
+        function getNoteById(id) {
+            const notes = getNotes();
+            return notes.find(n => n.id === id);
+        }
+
+        // ==================== 渲染笔记列表 ====================
+
+        function renderNotes(notes = null) {
+            const notesList = document.getElementById('notesList');
+            const emptyState = document.getElementById('emptyState');
+            const allNotes = notes || getNotes();
+            
+            updateGrowthStats();
+            
+            if (allNotes.length === 0) {
+                notesList.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+            
+            emptyState.classList.add('hidden');
+            
+            const categoryStyles = {
+                '电商': 'bg-blue-50 text-blue-600 border-blue-100',
+                '社交': 'bg-purple-50 text-purple-600 border-purple-100',
+                '工具': 'bg-green-50 text-green-600 border-green-100',
+                '内容': 'bg-orange-50 text-orange-600 border-orange-100',
+                '其他': 'bg-gray-50 text-gray-600 border-gray-100'
+            };
+            
+            notesList.innerHTML = allNotes.map((note, index) => `
+                <div class="bg-white/85 backdrop-blur-sm rounded-2xl shadow-card card-lift overflow-hidden animate-slide-up non-focus" style="animation-delay: ${index * 0.05}s">
+                    <div class="p-5 sm:p-6">
+                        <div class="flex items-start justify-between mb-4">
+                            <div class="flex-1 min-w-0">
+                                <h3 class="font-semibold text-apple-gray-900 text-lg mb-2 truncate">${escapeHtml(note.productName)}</h3>
+                                <span class="inline-block px-3 py-1 rounded-full text-xs font-medium border ${categoryStyles[note.category] || categoryStyles['其他']}">
+                                    ${note.category || '其他'}
+                                </span>
+                            </div>
+                            <div class="flex items-center gap-1 ml-2">
+                                <button onclick="viewNote('${note.id}')" class="clickable w-11 h-11 flex items-center justify-center rounded-xl hover:bg-apple-gray-100 transition-colors btn-press tooltip" data-tooltip="查看详情">
+                                    <svg class="w-5 h-5 text-apple-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                    </svg>
+                                </button>
+                                <button onclick="editNote('${note.id}')" class="clickable w-11 h-11 flex items-center justify-center rounded-xl hover:bg-apple-gray-100 transition-colors btn-press tooltip" data-tooltip="编辑">
+                                    <svg class="w-5 h-5 text-apple-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                    </svg>
+                                </button>
+                                <button onclick="openDeleteModal('${note.id}', 'note')" class="clickable w-11 h-11 flex items-center justify-center rounded-xl hover:bg-red-50 transition-colors btn-press tooltip" data-tooltip="删除">
+                                    <svg class="w-5 h-5 text-apple-gray-400 hover:text-accent-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="space-y-3 text-sm">
+                            ${note.highlights ? `
+                            <div class="flex items-start gap-3">
+                                <span class="w-5 h-5 bg-accent-warning/10 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3 h-3 text-accent-warning" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                    </svg>
+                                </span>
+                                <p class="text-apple-gray-600 line-clamp-2 leading-relaxed">${escapeHtml(note.highlights)}</p>
+                            </div>
+                            ` : ''}
+                            ${note.problems ? `
+                            <div class="flex items-start gap-3">
+                                <span class="w-5 h-5 bg-accent-danger/10 rounded flex items-center justify-center flex-shrink-0 mt-0.5">
+                                    <svg class="w-3 h-3 text-accent-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </span>
+                                <p class="text-apple-gray-600 line-clamp-2 leading-relaxed">${escapeHtml(note.problems)}</p>
+                            </div>
+                            ` : ''}
+                        </div>
+                        
+                        <div class="mt-5 pt-4 border-t border-apple-gray-100 flex items-center justify-between text-xs text-apple-gray-400">
+                            <span class="flex items-center gap-1">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                </svg>
+                                ${formatDate(note.experienceDate || note.createdAt)}
+                            </span>
+                            <span>${note.version || ''}</span>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function filterNotes() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const categoryFilter = document.getElementById('categoryFilter').value;
+            const sortFilter = document.getElementById('sortFilter').value;
+            
+            let notes = getNotes();
+            
+            if (searchTerm) {
+                notes = notes.filter(note => 
+                    note.productName.toLowerCase().includes(searchTerm) ||
+                    (note.highlights && note.highlights.toLowerCase().includes(searchTerm)) ||
+                    (note.problems && note.problems.toLowerCase().includes(searchTerm)) ||
+                    (note.suggestions && note.suggestions.toLowerCase().includes(searchTerm)) ||
+                    (note.insights && note.insights.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            if (categoryFilter) {
+                notes = notes.filter(note => note.category === categoryFilter);
+            }
+            
+            if (sortFilter === 'newest') {
+                notes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+            } else {
+                notes.sort((a, b) => new Date(a.createdAt) - new Date(b.createdAt));
+            }
+            
+            renderNotes(notes);
+        }
+
+        // ==================== 灵感模态框 ====================
+
+        function openInspirationModal() {
+            document.getElementById('inspirationModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            resetInspirationForm();
+            renderInspirationList();
+        }
+
+        function closeInspirationModal() {
+            document.getElementById('inspirationModal').classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        function resetInspirationForm() {
+            document.getElementById('inspirationForm').reset();
+            document.getElementById('inspirationId').value = '';
+            document.getElementById('selectedCategory').value = '其他';
+            document.getElementById('inspirationBtnText').textContent = '保存灵感';
+            document.querySelectorAll('.tag-btn').forEach(btn => {
+                btn.className = 'tag-btn px-4 py-2 rounded-full text-sm font-medium bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200 transition-colors';
+            });
+            document.querySelector('.tag-btn:last-child').classList.add('bg-accent-pink/15', 'text-accent-pink');
+        }
+
+        function selectTag(btn, category) {
+            document.querySelectorAll('.tag-btn').forEach(b => {
+                b.className = 'tag-btn px-4 py-2 rounded-full text-sm font-medium bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200 transition-colors';
+            });
+            btn.className = 'tag-btn px-4 py-2 rounded-full text-sm font-medium bg-accent-pink/15 text-accent-pink transition-colors';
+            document.getElementById('selectedCategory').value = category;
+        }
+
+        function renderInspirationList() {
+            const filter = document.getElementById('inspirationFilter').value;
+            let inspirations = getInspirations();
+            
+            if (filter) {
+                inspirations = inspirations.filter(i => i.category === filter);
+            }
+            
+            const listEl = document.getElementById('inspirationList');
+            const emptyEl = document.getElementById('inspirationEmpty');
+            
+            if (inspirations.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+                return;
+            }
+            
+            emptyEl.classList.add('hidden');
+            
+            const tagColors = {
+                '功能设计': 'tag-功能设计',
+                '交互体验': 'tag-交互体验',
+                '商业模式': 'tag-商业模式',
+                '运营策略': 'tag-运营策略',
+                '其他': 'tag-其他'
+            };
+            
+            listEl.innerHTML = inspirations.map(ins => `
+                <div class="bg-apple-gray-50 rounded-xl p-4 hover:bg-apple-gray-100/80 transition-colors group">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex-1 min-w-0">
+                            <p class="text-sm text-apple-gray-800 leading-relaxed mb-2">${escapeHtml(ins.content)}</p>
+                            <div class="flex items-center gap-2 flex-wrap">
+                                <span class="px-2.5 py-1 rounded-full text-xs font-medium ${tagColors[ins.category] || tagColors['其他']}">
+                                    ${ins.category}
+                                </span>
+                                ${ins.relatedProduct ? `<span class="text-xs text-apple-gray-500">· ${escapeHtml(ins.relatedProduct)}</span>` : ''}
+                                <span class="text-xs text-apple-gray-400">· ${formatDateTimeShort(ins.createdAt)}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onclick="editInspiration('${ins.id}')" class="clickable w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-colors tooltip" data-tooltip="编辑">
+                                <svg class="w-4 h-4 text-apple-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
+                                </svg>
+                            </button>
+                            <button onclick="openDeleteModal('${ins.id}', 'inspiration')" class="clickable w-8 h-8 flex items-center justify-center rounded-lg hover:bg-white transition-colors tooltip" data-tooltip="删除">
+                                <svg class="w-4 h-4 text-apple-gray-400 hover:text-accent-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function editInspiration(id) {
+            const ins = getInspirations().find(i => i.id === id);
+            if (!ins) return;
+            
+            document.getElementById('inspirationId').value = id;
+            document.getElementById('inspirationContent').value = ins.content;
+            document.getElementById('selectedCategory').value = ins.category;
+            document.getElementById('relatedProduct').value = ins.relatedProduct || '';
+            document.getElementById('inspirationBtnText').textContent = '更新灵感';
+            
+            document.querySelectorAll('.tag-btn').forEach(btn => {
+                const text = btn.textContent.trim();
+                btn.className = text === ins.category 
+                    ? 'tag-btn px-4 py-2 rounded-full text-sm font-medium bg-accent-pink/15 text-accent-pink transition-colors'
+                    : 'tag-btn px-4 py-2 rounded-full text-sm font-medium bg-apple-gray-100 text-apple-gray-600 hover:bg-apple-gray-200 transition-colors';
+            });
+        }
+
+        document.getElementById('inspirationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const id = document.getElementById('inspirationId').value;
+            const data = {
+                content: document.getElementById('inspirationContent').value,
+                category: document.getElementById('selectedCategory').value,
+                relatedProduct: document.getElementById('relatedProduct').value
+            };
+            
+            if (id) {
+                updateInspiration(id, data);
+            } else {
+                createInspiration(data);
+            }
+            
+            resetInspirationForm();
+            renderInspirationList();
+        });
+
+        // ==================== 快速插入灵感 ====================
+
+        function showInspirationQuickInsert() {
+            const inspirations = getInspirations();
+            const listEl = document.getElementById('quickInsertList');
+            const emptyEl = document.getElementById('quickInsertEmpty');
+            
+            if (inspirations.length === 0) {
+                listEl.innerHTML = '';
+                emptyEl.classList.remove('hidden');
+            } else {
+                emptyEl.classList.add('hidden');
+                listEl.innerHTML = inspirations.map(ins => `
+                    <button onclick="insertInspiration('${escapeHtml(ins.content).replace(/'/g, "\\'")}')" class="w-full text-left p-3 rounded-xl hover:bg-apple-gray-50 transition-colors text-sm">
+                        <p class="text-apple-gray-800 line-clamp-2">${escapeHtml(ins.content)}</p>
+                        <p class="text-xs text-apple-gray-400 mt-1">${ins.category} · ${formatDateTimeShort(ins.createdAt)}</p>
+                    </button>
+                `).join('');
+            }
+            
+            document.getElementById('quickInsertModal').classList.remove('hidden');
+        }
+
+        function closeQuickInsert() {
+            document.getElementById('quickInsertModal').classList.add('hidden');
+        }
+
+        function insertInspiration(content) {
+            const insightsEl = document.getElementById('insights');
+            const currentValue = insightsEl.value;
+            insightsEl.value = currentValue ? currentValue + '\n\n💡 ' + content : '💡 ' + content;
+            closeQuickInsert();
+        }
+
+        // ==================== 笔记模态框 ====================
+
+        function openModal() {
+            document.getElementById('modalTitle').textContent = '新建笔记';
+            document.getElementById('noteForm').reset();
+            document.getElementById('noteId').value = '';
+            document.getElementById('experienceDate').value = new Date().toISOString().split('T')[0];
+            document.getElementById('noteModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            enterFocusMode(document.getElementById('noteModal'));
+        }
+
+        function closeModal() {
+            document.getElementById('noteModal').classList.add('hidden');
+            document.body.style.overflow = '';
+            exitFocusMode();
+        }
+
+        function editNote(id) {
+            const note = getNoteById(id);
+            if (!note) return;
+            
+            document.getElementById('modalTitle').textContent = '编辑笔记';
+            document.getElementById('noteId').value = note.id;
+            document.getElementById('productName').value = note.productName || '';
+            document.getElementById('category').value = note.category || '';
+            document.getElementById('experienceDate').value = note.experienceDate || '';
+            document.getElementById('version').value = note.version || '';
+            document.getElementById('highlights').value = note.highlights || '';
+            document.getElementById('problems').value = note.problems || '';
+            document.getElementById('suggestions').value = note.suggestions || '';
+            document.getElementById('insights').value = note.insights || '';
+            
+            document.getElementById('noteModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            enterFocusMode(document.getElementById('noteModal'));
+        }
+
+        function viewNote(id) {
+            const note = getNoteById(id);
+            if (!note) return;
+            
+            currentDetailId = id;
+            
+            const categoryStyles = {
+                '电商': 'bg-blue-50 text-blue-600 border-blue-100',
+                '社交': 'bg-purple-50 text-purple-600 border-purple-100',
+                '工具': 'bg-green-50 text-green-600 border-green-100',
+                '内容': 'bg-orange-50 text-orange-600 border-orange-100',
+                '其他': 'bg-gray-50 text-gray-600 border-gray-100'
+            };
+            
+            document.getElementById('detailTitle').textContent = note.productName;
+            
+            document.getElementById('detailContent').innerHTML = `
+                <div class="space-y-6">
+                    <div class="flex flex-wrap items-center gap-3 pb-5 border-b border-apple-gray-100">
+                        <span class="inline-block px-4 py-1.5 rounded-full text-sm font-medium border ${categoryStyles[note.category] || categoryStyles['其他']}">
+                            ${note.category || '其他'}
+                        </span>
+                        <span class="text-sm text-apple-gray-500 flex items-center gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                            </svg>
+                            ${formatDate(note.experienceDate || note.createdAt)}
+                        </span>
+                        ${note.version ? `<span class="text-sm text-apple-gray-500 flex items-center gap-1.5">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"></path>
+                            </svg>
+                            ${note.version}
+                        </span>` : ''}
+                    </div>
+                    
+                    ${note.highlights ? `
+                    <div>
+                        <h4 class="text-sm font-semibold text-apple-gray-700 mb-3 flex items-center">
+                            <span class="w-6 h-6 bg-accent-warning/10 rounded-lg flex items-center justify-center mr-2">
+                                <svg class="w-3.5 h-3.5 text-accent-warning" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path>
+                                </svg>
+                            </span>
+                            核心功能 / 设计亮点
+                        </h4>
+                        <div class="bg-gradient-to-br from-yellow-50/80 to-orange-50/50 rounded-2xl p-5 text-apple-gray-700 whitespace-pre-wrap leading-relaxed border border-yellow-100/50">${escapeHtml(note.highlights)}</div>
+                    </div>
+                    ` : ''}
+                    
+                    ${note.problems ? `
+                    <div>
+                        <h4 class="text-sm font-semibold text-apple-gray-700 mb-3 flex items-center">
+                            <span class="w-6 h-6 bg-accent-danger/10 rounded-lg flex items-center justify-center mr-2">
+                                <svg class="w-3.5 h-3.5 text-accent-danger" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </span>
+                            存在问题 / 体验槽点
+                        </h4>
+                        <div class="bg-gradient-to-br from-red-50/80 to-orange-50/50 rounded-2xl p-5 text-apple-gray-700 whitespace-pre-wrap leading-relaxed border border-red-100/50">${escapeHtml(note.problems)}</div>
+                    </div>
+                    ` : ''}
+                    
+                    ${note.suggestions ? `
+                    <div>
+                        <h4 class="text-sm font-semibold text-apple-gray-700 mb-3 flex items-center">
+                            <span class="w-6 h-6 bg-accent-success/10 rounded-lg flex items-center justify-center mr-2">
+                                <svg class="w-3.5 h-3.5 text-accent-success" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                                </svg>
+                            </span>
+                            改进建议
+                        </h4>
+                        <div class="bg-gradient-to-br from-green-50/80 to-emerald-50/50 rounded-2xl p-5 text-apple-gray-700 whitespace-pre-wrap leading-relaxed border border-green-100/50">${escapeHtml(note.suggestions)}</div>
+                    </div>
+                    ` : ''}
+                    
+                    ${note.insights ? `
+                    <div>
+                        <h4 class="text-sm font-semibold text-apple-gray-700 mb-3 flex items-center">
+                            <span class="w-6 h-6 bg-accent-primary/10 rounded-lg flex items-center justify-center mr-2">
+                                <svg class="w-3.5 h-3.5 text-accent-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                                </svg>
+                            </span>
+                            可复用的产品思路
+                        </h4>
+                        <div class="bg-gradient-to-br from-blue-50/80 to-indigo-50/50 rounded-2xl p-5 text-apple-gray-700 whitespace-pre-wrap leading-relaxed border border-blue-100/50">${escapeHtml(note.insights)}</div>
+                    </div>
+                    ` : ''}
+                    
+                    <div class="text-xs text-apple-gray-400 pt-5 border-t border-apple-gray-100">
+                        创建于 ${formatDateTime(note.createdAt)}
+                        ${note.updatedAt !== note.createdAt ? ` · 更新于 ${formatDateTime(note.updatedAt)}` : ''}
+                    </div>
+                </div>
+            `;
+            
+            document.getElementById('detailModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function editFromDetail() {
+            closeDetailModal();
+            setTimeout(() => editNote(currentDetailId), 150);
+        }
+
+        function closeDetailModal() {
+            document.getElementById('detailModal').classList.add('hidden');
+            document.body.style.overflow = '';
+            currentDetailId = null;
+        }
+
+        // ==================== 删除确认模态框 ====================
+
+        function openDeleteModal(id, type) {
+            currentDeleteId = id;
+            currentDeleteType = type;
+            document.getElementById('deleteModal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeDeleteModal() {
+            document.getElementById('deleteModal').classList.add('hidden');
+            document.body.style.overflow = '';
+            currentDeleteId = null;
+            currentDeleteType = null;
+        }
+
+        function confirmDelete() {
+            if (currentDeleteId) {
+                if (currentDeleteType === 'note') {
+                    deleteNote(currentDeleteId);
+                    filterNotes();
+                } else {
+                    deleteInspiration(currentDeleteId);
+                    renderInspirationList();
+                }
+                closeDeleteModal();
+            }
+        }
+
+        // ==================== 新手引导 ====================
+
+        function showGuide() {
+            if (!localStorage.getItem(GUIDE_KEY)) {
+                document.getElementById('guideOverlay').classList.remove('hidden');
+            }
+        }
+
+        function closeGuide() {
+            localStorage.setItem(GUIDE_KEY, 'true');
+            document.getElementById('guideOverlay').classList.add('hidden');
+        }
+
+        // ==================== 表单处理 ====================
+
+        document.getElementById('noteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const noteId = document.getElementById('noteId').value;
+            const noteData = {
+                productName: document.getElementById('productName').value,
+                category: document.getElementById('category').value,
+                experienceDate: document.getElementById('experienceDate').value,
+                version: document.getElementById('version').value,
+                highlights: document.getElementById('highlights').value,
+                problems: document.getElementById('problems').value,
+                suggestions: document.getElementById('suggestions').value,
+                insights: document.getElementById('insights').value
+            };
+            
+            if (noteId) {
+                updateNote(noteId, noteData);
+            } else {
+                createNote(noteData);
+            }
+            
+            closeModal();
+            filterNotes();
+        });
+
+        // ==================== 工具函数 ====================
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+        }
+
+        function formatDateTime(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')} ${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        }
+
+        function formatDateTimeShort(dateStr) {
+            if (!dateStr) return '';
+            const date = new Date(dateStr);
+            const now = new Date();
+            const diff = now - date;
+            
+            if (diff < 60000) return '刚刚';
+            if (diff < 3600000) return Math.floor(diff / 60000) + '分钟前';
+            if (diff < 86400000) return Math.floor(diff / 3600000) + '小时前';
+            if (diff < 604800000) return Math.floor(diff / 86400000) + '天前';
+            return `${date.getMonth() + 1}/${date.getDate()}`;
+        }
+
+        function updateProgressBar(count) {
+            const progressBar = document.getElementById('progressBar');
+            if (progressBar) {
+                const progress = Math.min(count * 5, 100);
+                progressBar.style.width = progress + '%';
+            }
+        }
+
+        function addSampleData() {
+            const notes = getNotes();
+            if (notes.length === 0) {
+                const sampleNotes = [
+                    {
+                        productName: '淘宝',
+                        category: '电商',
+                        experienceDate: new Date().toISOString().split('T')[0],
+                        version: 'v10.28.0',
+                        highlights: '1. 首页信息流推荐算法精准，千人千面效果显著\n2. 直播带货入口突出，互动体验完善\n3. 购物车降价提醒功能实用\n4. 搜索结果筛选维度丰富',
+                        problems: '1. 开屏广告时间过长，影响启动速度\n2. 部分商品详情页加载缓慢\n3. 消息推送过于频繁，打扰用户\n4. 大促期间页面卡顿明显',
+                        suggestions: '1. 优化开屏广告，提供跳过按钮\n2. 采用图片懒加载技术优化详情页\n3. 提供更细粒度的推送设置选项\n4. 大促前进行性能压测和优化',
+                        insights: '电商APP的核心竞争力在于：推荐算法精准度、交易流程顺畅度、物流体验。淘宝在内容化（直播、短视频）方面的布局值得借鉴，通过内容增加用户停留时长。'
+                    },
+                    {
+                        productName: '微信',
+                        category: '社交',
+                        experienceDate: new Date(Date.now() - 86400000).toISOString().split('T')[0],
+                        version: 'v8.0.45',
+                        highlights: '1. 小程序生态完善，无需下载即用\n2. 朋友圈社交关系沉淀深厚\n3. 支付场景覆盖全面\n4. 公众号内容生态丰富',
+                        problems: '1. 聊天记录迁移麻烦\n2. 群管理功能不够完善\n3. 文件传输大小限制\n4. 广告逐渐增多',
+                        suggestions: '1. 优化聊天记录云同步\n2. 增强群管理员权限\n3. 提升文件传输上限\n4. 广告展示更精准不扰民',
+                        insights: '微信的成功在于建立了强大的网络效应和生态闭环。产品设计坚持极简原则，通过克制获得用户信任。做产品要学会做减法，核心功能做到极致。'
+                    }
+                ];
+                sampleNotes.forEach(note => createNote(note));
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            addSampleData();
+            renderNotes();
+            updateProgressBar(getNotes().length);
+            setTimeout(showGuide, 500);
+        });
+    </script>
+</body>
+</html>
